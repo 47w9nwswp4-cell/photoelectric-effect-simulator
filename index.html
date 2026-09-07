@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>光電效應 · 真空光電池模擬器</title>
+  <meta name="referrer" content="no-referrer" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; font-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <h1>光電效應 · 真空光電池模擬器</h1>
+        <p>觀察光子打中金屬表面、光電子射出、電場加速／遏止，以及飽和電流同遏止電壓。</p>
+      </div>
+      <span class="badge">HKDSE · 近代物理</span>
+    </header>
+    <div class="grid">
+      <section class="card">
+        <div class="stage">
+          <canvas id="world" width="980" height="500"></canvas>
+          <div class="hud">
+            <div class="chip" id="hudMain">—</div>
+            <div class="chip" id="hudSub">—</div>
+            <div class="chip" id="hudHint">拖曳旋轉 · 滾輪縮放</div>
+          </div>
+        </div>
+        <div class="controls">
+          <button class="btn btn-play on" id="btnPlay">❚❚ 暫停照射</button>
+          <button class="btn btn-stop" id="btnReset">↺ 重設粒子</button>
+          <button class="btn btn-ghost" id="btnAuto">⟳ 自動旋轉</button>
+          <button class="btn btn-ghost" id="btnView">視角還原</button>
+          <label class="speed">播放速率
+            <select id="rate">
+              <option value="0.25">0.25×</option>
+              <option value="0.5">0.5×</option>
+              <option value="1" selected>1×</option>
+              <option value="2">2×</option>
+              <option value="4">4×</option>
+            </select>
+          </label>
+        </div>
+        <div class="eqs">
+          <article class="eq active" id="eqA">
+            <h3>愛因斯坦光電方程</h3>
+            <div class="formula">hf = φ + K<sub>max</sub></div>
+            <div class="plug" id="plugA"></div>
+          </article>
+          <article class="eq" id="eqB">
+            <h3>遏止電壓</h3>
+            <div class="formula">e V<sub>s</sub> = K<sub>max</sub> = hf − φ</div>
+            <div class="plug" id="plugB"></div>
+          </article>
+          <article class="eq" id="eqC">
+            <h3>臨界頻率／波長</h3>
+            <div class="formula">f<sub>0</sub> = φ / h　　λ<sub>0</sub> = hc / φ</div>
+            <div class="plug" id="plugC"></div>
+          </article>
+        </div>
+        <div class="graphs">
+          <div class="gbox">
+            <h4>I–V 特性曲線（頻率、強度固定）</h4>
+            <canvas class="graph" id="g1" width="520" height="168"></canvas>
+          </div>
+          <div class="gbox">
+            <h4>K<sub>max</sub>–f 關係（直線，截距 f<sub>0</sub>）</h4>
+            <canvas class="graph" id="g2" width="520" height="168"></canvas>
+          </div>
+        </div>
+      </section>
+      <aside class="card">
+        <div class="mode-row" id="modes"></div>
+        <div class="vars" id="vars"></div>
+        <p class="warn" id="warn"></p>
+        <div class="presets" id="presets"></div>
+        <div class="legend" id="legend"></div>
+        <footer>
+          光電子只在 <strong>hf &gt; φ</strong> 時射出；最大動能只取決於頻率，唔取決於強度。強度只改變單位時間光子數，因而改變飽和電流 I<sub>s</sub>。逆向電壓令電子減速，當 |V| ≥ V<sub>s</sub> 時連最快電子都返唔到陽極，電流為零。<br />
+          動畫用放慢時間同示範質量，方便課堂睇軌跡；數值面板用 SI／電子伏特計算。<br />
+          本頁完全喇瀏覽器內運算：無帳戶、無 Cookie、無分析、無對外連線、唔儲存任何學生輸入。
+        </footer>
+      </aside>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
